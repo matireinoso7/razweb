@@ -1,0 +1,56 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum SourceType {
+  TECH_NEWS
+  AI_PAPER
+  X_POST
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  name      String
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  favorites Favorite[]
+}
+
+model NewsItem {
+  id          String     @id @default(uuid())
+  title       String
+  summary     String
+  content     String?
+  url         String     @unique
+  sourceName  String
+  sourceType  String     // TECH_NEWS, AI_PAPER, X_POST
+  category    String     @default("Artificial Intelligence")
+  imageUrl    String?
+  author      String?
+  publishedAt DateTime
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  favorites   Favorite[]
+
+  @@index([sourceType])
+  @@index([publishedAt])
+}
+
+model Favorite {
+  id         String   @id @default(uuid())
+  userId     String
+  newsItemId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  newsItem NewsItem @relation(fields: [newsItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, newsItemId])
+  @@index([userId])
+}
