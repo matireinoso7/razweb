@@ -47,7 +47,7 @@ export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) 
   return (
     <div className="space-y-6">
       {/* Header View */}
-      <div className="flex items-center justify-between p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs">
+      <div className="flex items-center justify-between p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl shadow-xs">
         <div className="flex items-center gap-3.5">
           <button
             onClick={onBackToFeed}

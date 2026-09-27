@@ -2,37 +2,39 @@
 
 @layer base {
   :root {
-    --bg-primary: #f8fafc;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f1f5f9;
-    --border-color: #cbd5e1;
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
+    /* Escala monocromática para Modo Claro: blancos, grises suaves y negros */
+    --bg-primary: #f5f5f7;
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-card-hover: rgba(245, 245, 247, 0.85);
+    --border-color: rgba(212, 212, 216, 0.7);
+    --text-primary: #0a0a0a;
+    --text-secondary: #27272a;
+    --text-muted: #71717a;
 
-    /* Darker, soothing Teal for light mode to avoid eye fatigue */
-    --teal-primary: #0f766e;
-    --teal-light: #14b8a6;
-    --teal-dark: #115e59;
-    --teal-bg: #ccfbf1;
-    --teal-glow: rgba(15, 118, 110, 0.15);
+    /* Color principal de acento: verde esmeralda balanceado #0ea94f / #12d463 */
+    --teal-primary: #0ea94f;
+    --teal-light: #12d463;
+    --teal-dark: #097334;
+    --teal-bg: rgba(18, 212, 99, 0.12);
+    --teal-glow: rgba(18, 212, 99, 0.2);
   }
 
   .dark {
-    --bg-primary: #090d12;
-    --bg-card: #0f172a;
-    --bg-card-hover: #1e293b;
-    --border-color: #1e293b;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
+    /* Escala monocromática para Modo Oscuro: negros puros (#0a0a0a) a grises profundos */
+    --bg-primary: #080808;
+    --bg-card: rgba(18, 18, 18, 0.78);
+    --bg-card-hover: rgba(28, 28, 30, 0.88);
+    --border-color: rgba(45, 45, 48, 0.65);
+    --text-primary: #f4f4f5;
+    --text-secondary: #d42d4d8;
+    --text-muted: #a1a1aa;
 
-    /* Bright, crisp Teal with deep contrast for dark mode */
-    --teal-primary: #14b8a6;
-    --teal-light: #2dd4bf;
-    --teal-dark: #0f766e;
-    --teal-bg: rgba(20, 184, 166, 0.12);
-    --teal-glow: rgba(45, 212, 191, 0.25);
+    /* Verde brillante requested #12d463 para modo oscuro */
+    --teal-primary: #12d463;
+    --teal-light: #3bf084;
+    --teal-dark: #0ea94f;
+    --teal-bg: rgba(18, 212, 99, 0.14);
+    --teal-glow: rgba(18, 212, 99, 0.3);
   }
 }
 
@@ -65,6 +67,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--teal-primary);
+}
+
+/* Glassmorphism card utilities */
+.card-glass {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+}
+
+.card-glass:hover {
+  background-color: var(--bg-card-hover);
 }
 
 /* Animations for reader modal and smooth expansion */

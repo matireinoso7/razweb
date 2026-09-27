@@ -99,23 +99,6 @@ Puntos destacados de la comunicación:
         author: "@AIatMeta",
         publishedAt: new Date(Date.now() - 1000 * 60 * 420),
       },
-      {
-        title: "Mistral AI en X: Presentamos Le Chat Enterprise con privacidad estricta y conectores corporativos",
-        summary: "Plataforma de trabajo asistida por inteligencia artificial orientada a empresas con requerimientos de confidencialidad y control absoluto sobre los datos.",
-        content: `Mistral AI, laboratorio pionero europeo con sede en París, anunció el lanzamiento de su suite integral Le Chat Enterprise, diseñada para cerrar la brecha entre la IA generativa de punta y el cumplimiento estricto de la privacidad corporativa.
-
-Características clave del servicio:
-1. Soberanía de datos garantizada: Alojamientos dedicados en centros de datos con certificación europea y opción de despliegue auto-hospedado (on-premises) para entidades del sector público y financiero.
-2. Conectores documentales corporativos: Búsqueda semántica integrada sobre silos de datos empresariales (SharePoint, Google Drive, Notion, Slack) con permisos de acceso granulares basados en roles de usuario.
-3. Modelos de vanguardia sin latencia: Acceso a la familia Mistral Large y modelos de codificación con ventanas de contexto ultra-amplias, manteniendo una latencia de token sobresaliente.`,
-        url: "https://mistral.ai/news/le-chat-enterprise/",
-        sourceName: "Mistral AI en X (@MistralAI)",
-        sourceType: "X_POST",
-        category: "European Open AI",
-        imageUrl: "https://images.unsplash.com/photo-1507668077129-56e32842fceb?w=800&auto=format&fit=crop&q=80",
-        author: "@MistralAI",
-        publishedAt: new Date(Date.now() - 1000 * 60 * 500),
-      },
     ];
   }
 }

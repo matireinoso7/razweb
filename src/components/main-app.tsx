@@ -6,7 +6,7 @@ import { NewsGrid } from "@/components/news/news-grid";
 import { FavoritesView } from "@/components/news/favorites-view";
 import { AuthModal } from "@/components/auth/auth-modal";
 import { UserDashboardModal } from "@/components/auth/user-dashboard-modal";
-import { Sparkles, Terminal, Shield, Zap, ArrowUpRight } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export function MainApp() {
   const [currentTab, setCurrentTab] = useState<"feed" | "favorites">("feed");
@@ -15,7 +15,7 @@ export function MainApp() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-primary)]">
-      {/* Header */}
+      {/* Header con Controles a la izquierda, Logo centrado y Tabs debajo */}
       <Header
         currentTab={currentTab}
         onChangeTab={(tab) => setCurrentTab(tab)}
@@ -23,44 +23,22 @@ export function MainApp() {
         onOpenDashboard={() => setDashboardOpen(true)}
       />
 
-      {/* Hero Banner only on Feed */}
+      {/* Hero Banner centrado y limpio (sin bloques de ingesta ni arquitectura) */}
       {currentTab === "feed" && (
-        <section className="relative overflow-hidden border-b border-[var(--border-color)] bg-gradient-to-b from-[var(--teal-bg)]/30 to-transparent py-10 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/20 mb-3">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Radar de Vanguardia en Inteligencia Artificial</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--text-primary)]">
-                Noticias, Papers de Investigación y Novedades de IA
-              </h1>
-              <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed">
-                Información en tiempo real curada desde los principales noticieros tecnológicos (TechCrunch, The Verge, Wired), papers científicos de arXiv y publicaciones oficiales de OpenAI, Anthropic, Google DeepMind y Meta AI.
-              </p>
+        <section className="relative overflow-hidden border-b border-[var(--border-color)] bg-gradient-to-b from-[var(--teal-bg)]/20 via-transparent to-transparent py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/25 mb-4 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Radar de Vanguardia en Inteligencia Artificial</span>
             </div>
+            
+            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[var(--text-primary)] max-w-3xl leading-[1.15]">
+              Noticias, Papers de Investigación y Novedades de IA
+            </h1>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-              <div className="p-3.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[var(--teal-bg)] text-[var(--teal-primary)]">
-                  <Zap className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-[var(--text-primary)]">Ingesta Multi-Fuente</div>
-                  <div className="text-[11px] text-[var(--text-muted)]">RSS + arXiv + X API Feeds</div>
-                </div>
-              </div>
-
-              <div className="p-3.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400">
-                  <Shield className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-[var(--text-primary)]">Arquitectura SOLID</div>
-                  <div className="text-[11px] text-[var(--text-muted)]">Next.js + Prisma + JWT</div>
-                </div>
-              </div>
-            </div>
+            <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
+              Información en tiempo real curada desde los principales noticieros tecnológicos (TechCrunch, The Verge, Wired), papers científicos de arXiv y publicaciones oficiales de OpenAI, Anthropic, Google DeepMind y Meta AI.
+            </p>
           </div>
         </section>
       )}
@@ -78,7 +56,7 @@ export function MainApp() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[var(--border-color)] bg-[var(--bg-card)] py-8 px-4 sm:px-6 lg:px-8 text-xs text-[var(--text-muted)]">
+      <footer className="border-t border-[var(--border-color)] bg-[var(--bg-card)]/80 backdrop-blur-md py-8 px-4 sm:px-6 lg:px-8 text-xs text-[var(--text-muted)]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="font-bold text-[var(--text-primary)]">RazWeb</span>
@@ -86,7 +64,7 @@ export function MainApp() {
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1 text-[var(--teal-primary)] font-medium">
+            <span className="flex items-center gap-1.5 text-[var(--teal-primary)] font-medium">
               <span className="w-2 h-2 rounded-full bg-[var(--teal-primary)] animate-pulse" />
               Sistema de Ingesta Activo
             </span>

@@ -132,11 +132,11 @@ export function NewsDetailModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-sm animate-modal-backdrop overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-modal-backdrop overflow-y-auto"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-3xl my-auto max-h-[90vh] flex flex-col bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl shadow-2xl overflow-hidden animate-modal-content transition-all"
+        className="relative w-full max-w-3xl my-auto max-h-[90vh] flex flex-col bg-[var(--bg-card)] backdrop-blur-2xl border border-[var(--border-color)] rounded-3xl shadow-2xl overflow-hidden animate-modal-content transition-all"
       >
         {/* Floating Close Button */}
         <button

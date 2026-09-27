@@ -128,7 +128,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
   return (
     <div className="space-y-6">
       {/* Search and Filter Controls */}
-      <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs">
+      <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl shadow-xs">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Source Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)]">

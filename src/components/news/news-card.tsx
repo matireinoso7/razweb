@@ -113,7 +113,7 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
   return (
     <article
       onClick={handleCardClick}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] transition-all duration-300 hover:shadow-2xl hover:border-[var(--teal-primary)]/60 cursor-pointer transform hover:-translate-y-1"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl hover:bg-[var(--bg-card-hover)] transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--teal-glow)] hover:border-[var(--teal-primary)]/50 cursor-pointer transform hover:-translate-y-1"
     >
       {/* Card Header & Image */}
       <div className="relative aspect-16/10 w-full overflow-hidden bg-slate-900/10">
