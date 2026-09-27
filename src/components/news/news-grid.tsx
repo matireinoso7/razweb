@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { NewsItemEntity, SourceType } from "@/domain/entities/news";
 import { NewsCard } from "./news-card";
+import { NewsDetailModal } from "./news-detail-modal";
 import { Loader2, RefreshCw, AlertCircle, Sparkles, SlidersHorizontal, Search } from "lucide-react";
 
 interface NewsGridProps {
@@ -32,6 +33,9 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
   const [search, setSearch] = useState<string>("");
   const [searchInput, setSearchInput] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+
+  // Selected article for dynamic expansion modal
+  const [selectedNews, setSelectedNews] = useState<NewsItemEntity | null>(null);
 
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
@@ -112,16 +116,25 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
     setSearch(searchInput);
   };
 
+  const handleFavoriteToggled = (newsId: string, isFav: boolean) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === newsId ? { ...item, isFavorite: isFav } : item))
+    );
+    if (selectedNews && selectedNews.id === newsId) {
+      setSelectedNews((prev) => (prev ? { ...prev, isFavorite: isFav } : null));
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Search and Filter Controls */}
-      <div className="flex flex-col gap-4 p-4 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs">
+      <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Source Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
             <button
               onClick={() => setSourceType("ALL")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 sourceType === "ALL"
                   ? "bg-[var(--teal-primary)] text-white shadow-xs"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -131,7 +144,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
             </button>
             <button
               onClick={() => setSourceType("TECH_NEWS")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 sourceType === "TECH_NEWS"
                   ? "bg-[var(--teal-primary)] text-white shadow-xs"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -141,7 +154,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
             </button>
             <button
               onClick={() => setSourceType("AI_PAPER")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 sourceType === "AI_PAPER"
                   ? "bg-[var(--teal-primary)] text-white shadow-xs"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -151,7 +164,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
             </button>
             <button
               onClick={() => setSourceType("X_POST")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 sourceType === "X_POST"
                   ? "bg-[var(--teal-primary)] text-white shadow-xs"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -164,13 +177,13 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           {/* Sync Button & Search Bar */}
           <div className="flex items-center gap-2">
             <form onSubmit={handleSearchSubmit} className="relative flex-1 md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
               <input
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Buscar noticias..."
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--teal-primary)]"
+                className="w-full pl-10 pr-3 py-2 text-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--teal-primary)]"
               />
             </form>
 
@@ -178,7 +191,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
               onClick={handleSyncLatest}
               disabled={syncing}
               title="Actualizar y sincronizar fuentes"
-              className="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--teal-primary)] transition-all cursor-pointer disabled:opacity-50"
+              className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--teal-primary)] transition-all cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
             </button>
@@ -195,7 +208,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
             <button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`px-3 py-1 rounded-full text-xs shrink-0 transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs shrink-0 transition-colors cursor-pointer ${
                 category === cat
                   ? "bg-[var(--teal-primary)] text-white font-medium shadow-xs"
                   : "bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]"
@@ -209,14 +222,14 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
 
       {/* Error state */}
       {error && (
-        <div className="flex items-center justify-between p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
+        <div className="flex items-center justify-between p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
           <div className="flex items-center gap-2">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <span>{error}</span>
           </div>
           <button
             onClick={() => fetchNews(1, false)}
-            className="px-3 py-1 rounded-lg bg-red-500 text-white text-xs font-semibold hover:bg-red-600 transition-colors cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-600 transition-colors cursor-pointer"
           >
             Reintentar
           </button>
@@ -229,15 +242,15 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] p-4 space-y-4 animate-pulse"
+              className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] p-5 space-y-4 animate-pulse"
             >
-              <div className="aspect-16/9 w-full bg-[var(--bg-card-hover)] rounded-xl" />
-              <div className="h-4 bg-[var(--bg-card-hover)] rounded-md w-3/4" />
+              <div className="aspect-16/10 w-full bg-[var(--bg-card-hover)] rounded-2xl" />
+              <div className="h-5 bg-[var(--bg-card-hover)] rounded-md w-3/4" />
               <div className="space-y-2">
-                <div className="h-3 bg-[var(--bg-card-hover)] rounded-md w-full" />
-                <div className="h-3 bg-[var(--bg-card-hover)] rounded-md w-5/6" />
+                <div className="h-3.5 bg-[var(--bg-card-hover)] rounded-md w-full" />
+                <div className="h-3.5 bg-[var(--bg-card-hover)] rounded-md w-5/6" />
               </div>
-              <div className="h-8 bg-[var(--bg-card-hover)] rounded-xl w-full" />
+              <div className="h-9 bg-[var(--bg-card-hover)] rounded-xl w-full" />
             </div>
           ))}
         </div>
@@ -245,9 +258,9 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
 
       {/* Empty State */}
       {!loading && items.length === 0 && !error && (
-        <div className="py-16 text-center rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)]">
           <Sparkles className="w-12 h-12 text-[var(--teal-primary)] mx-auto mb-3 opacity-60" />
-          <h3 className="text-lg font-bold text-[var(--text-primary)]">No se encontraron noticias</h3>
+          <h3 className="text-xl font-bold text-[var(--text-primary)]">No se encontraron noticias</h3>
           <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-sm mx-auto">
             Prueba ajustando los filtros de categoría o buscando otro término.
           </p>
@@ -258,7 +271,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
               setSearch("");
               setSearchInput("");
             }}
-            className="mt-4 px-4 py-2 rounded-xl bg-[var(--teal-primary)] text-white text-xs font-semibold cursor-pointer"
+            className="mt-5 px-5 py-2.5 rounded-xl bg-[var(--teal-primary)] text-white text-xs font-semibold cursor-pointer shadow-xs hover:bg-[var(--teal-dark)] transition-colors"
           >
             Restablecer Filtros
           </button>
@@ -273,6 +286,8 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
               key={`${news.id || news.url}-${index}`}
               news={news}
               onOpenAuth={onOpenAuth}
+              onOpenDetail={(item) => setSelectedNews(item)}
+              onFavoriteToggled={handleFavoriteToggled}
             />
           ))}
         </div>
@@ -292,6 +307,15 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           </div>
         )}
       </div>
+
+      {/* Dynamic Expansion Modal for reading */}
+      <NewsDetailModal
+        news={selectedNews}
+        isOpen={Boolean(selectedNews)}
+        onClose={() => setSelectedNews(null)}
+        onOpenAuth={onOpenAuth}
+        onFavoriteToggled={handleFavoriteToggled}
+      />
     </div>
   );
 }
