@@ -1,0 +1,14 @@
+---
+description: UI, motion y tipografía RazWeb
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# UI RazWeb
+
+- Usar variables CSS de `globals.css` (`--bg-card`, `--teal-primary`, `--ease-out`).
+- Interacciones: `.press-scale`, `.craft-card`, `.btn-magnetic` donde ya existan.
+- Artículos: clase `.prose-reading` y `--font-reading` para cuerpo; Outfit/Inter para chrome.
+- Layout noticias: masthead → subnav → portada → toolbar → grid.
+- Respetar `prefers-reduced-motion`.
+- A11y: labels en botones icono, contraste en modo claro/oscuro.

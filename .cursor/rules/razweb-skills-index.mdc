@@ -1,0 +1,14 @@
+---
+description: Índice de skills locales para RazWeb
+alwaysApply: true
+---
+
+# Skills RazWeb
+
+Consultar [AGENTS.md](../../AGENTS.md) para rutas y triggers de las 27 skills.
+
+Cuando el task sea UI, leer `impeccable`, `animate`, `mobile-native` o `emil-design-eng` según corresponda.
+
+Cuando el task sea auth/API/seguridad, considerar `review-security`.
+
+Antes de PRs grandes, considerar `review-bugbot` y `split-to-prs`.

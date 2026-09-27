@@ -17,5 +17,6 @@ export interface INewsRepository {
     userId?: string;
   }): Promise<{ items: NewsItemEntity[]; total: number; hasMore: boolean }>;
   getFavorites(userId: string): Promise<NewsItemEntity[]>;
+  getById(id: string, userId?: string): Promise<NewsItemEntity | null>;
   toggleFavorite(userId: string, newsItemId: string): Promise<boolean>;
 }

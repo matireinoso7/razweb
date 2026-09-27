@@ -111,6 +111,44 @@ export class PrismaNewsRepository implements INewsRepository {
     };
   }
 
+  async getById(id: string, userId?: string): Promise<NewsItemEntity | null> {
+    const record = await prisma.newsItem.findUnique({
+      where: { id },
+      include: userId
+        ? {
+            favorites: {
+              where: { userId },
+              select: { id: true },
+            },
+          }
+        : undefined,
+    });
+
+    if (!record) return null;
+
+    type RecordWithFavorites = typeof record & { favorites?: { id: string }[] };
+    const withFavorites = record as RecordWithFavorites;
+
+    return {
+      id: record.id,
+      title: record.title,
+      summary: record.summary,
+      content: record.content || undefined,
+      url: record.url,
+      sourceName: record.sourceName,
+      sourceType: record.sourceType as SourceType,
+      category: record.category,
+      imageUrl: record.imageUrl || undefined,
+      author: record.author || undefined,
+      publishedAt: record.publishedAt,
+      createdAt: record.createdAt,
+      isFavorite:
+        Boolean(userId) &&
+        Array.isArray(withFavorites.favorites) &&
+        withFavorites.favorites.length > 0,
+    };
+  }
+
   async getFavorites(userId: string): Promise<NewsItemEntity[]> {
     const favorites = await prisma.favorite.findMany({
       where: { userId },

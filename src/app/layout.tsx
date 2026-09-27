@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Newsreader } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { AuthProvider } from "@/components/auth/auth-context";
@@ -16,6 +16,12 @@ const outfit = Outfit({
   display: "swap",
 });
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-reading",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "RazWeb - Portal de Noticias sobre Inteligencia Artificial & Tecnología",
   description: "Noticias en tiempo real sobre IA, papers de investigación de arXiv y actualizaciones oficiales de las principales empresas de tecnología.",
@@ -27,7 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${inter.variable} ${outfit.variable}`}>
+    <html
+      lang="es"
+      suppressHydrationWarning
+      className={`${inter.variable} ${outfit.variable} ${newsreader.variable}`}
+    >
       <body className="antialiased font-sans">
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
