@@ -126,9 +126,9 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
   };
 
   return (
-    <div className="space-y-6">
-      {/* Search and Filter Controls */}
-      <div className="flex flex-col gap-4 p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl shadow-xs">
+    <div className="space-y-8">
+      {/* Search and Filter Controls con Glassmorphism */}
+      <div className="flex flex-col gap-4 p-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Source Tabs */}
           <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
@@ -258,7 +258,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
 
       {/* Empty State */}
       {!loading && items.length === 0 && !error && (
-        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
           <Sparkles className="w-12 h-12 text-[var(--teal-primary)] mx-auto mb-3 opacity-60" />
           <h3 className="text-xl font-bold text-[var(--text-primary)]">No se encontraron noticias</h3>
           <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-sm mx-auto">

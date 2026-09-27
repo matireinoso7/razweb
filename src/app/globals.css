@@ -4,12 +4,12 @@
   :root {
     /* Escala monocromática para Modo Claro: blancos, grises suaves y negros */
     --bg-primary: #f5f5f7;
-    --bg-card: rgba(255, 255, 255, 0.75);
-    --bg-card-hover: rgba(245, 245, 247, 0.85);
-    --border-color: rgba(212, 212, 216, 0.7);
+    --bg-card: rgba(255, 255, 255, 0.72);
+    --bg-card-hover: rgba(255, 255, 255, 0.85);
+    --border-color: rgba(203, 213, 225, 0.65);
     --text-primary: #0a0a0a;
     --text-secondary: #27272a;
-    --text-muted: #71717a;
+    --text-muted: #64748b;
 
     /* Color principal de acento: verde esmeralda balanceado #0ea94f / #12d463 */
     --teal-primary: #0ea94f;
@@ -17,16 +17,19 @@
     --teal-dark: #097334;
     --teal-bg: rgba(18, 212, 99, 0.12);
     --teal-glow: rgba(18, 212, 99, 0.2);
+
+    /* Overlay para el fondo tech en modo claro */
+    --bg-overlay: rgba(248, 250, 252, 0.65);
   }
 
   .dark {
     /* Escala monocromática para Modo Oscuro: negros puros (#0a0a0a) a grises profundos */
     --bg-primary: #080808;
-    --bg-card: rgba(18, 18, 18, 0.78);
-    --bg-card-hover: rgba(28, 28, 30, 0.88);
-    --border-color: rgba(45, 45, 48, 0.65);
+    --bg-card: rgba(14, 14, 16, 0.74);
+    --bg-card-hover: rgba(24, 24, 28, 0.85);
+    --border-color: rgba(55, 55, 62, 0.65);
     --text-primary: #f4f4f5;
-    --text-secondary: #d42d4d8;
+    --text-secondary: #d4d4d8;
     --text-muted: #a1a1aa;
 
     /* Verde brillante requested #12d463 para modo oscuro */
@@ -35,11 +38,19 @@
     --teal-dark: #0ea94f;
     --teal-bg: rgba(18, 212, 99, 0.14);
     --teal-glow: rgba(18, 212, 99, 0.3);
+
+    /* Velo semitransparente oscuro sobre el fondo tech en modo oscuro */
+    --bg-overlay: rgba(8, 8, 10, 0.88);
   }
 }
 
 body {
   background-color: var(--bg-primary);
+  background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('/tech-bg.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--text-primary);
   min-height: 100vh;
   transition: background-color 0.25s ease, color 0.25s ease;
@@ -69,15 +80,15 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--teal-primary);
 }
 
-/* Glassmorphism card utilities */
-.card-glass {
+/* Glassmorphism panel utility */
+.glass-panel {
   background-color: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-color);
 }
 
-.card-glass:hover {
+.glass-panel-hover:hover {
   background-color: var(--bg-card-hover);
 }
 

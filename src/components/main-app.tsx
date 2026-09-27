@@ -14,8 +14,8 @@ export function MainApp() {
   const [dashboardOpen, setDashboardOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--bg-primary)]">
-      {/* Header con Controles a la izquierda, Logo centrado y Tabs debajo */}
+    <div className="min-h-screen flex flex-col bg-transparent">
+      {/* Header con Controles a la derecha, Logo centrado con espaciado amplio y Tabs debajo */}
       <Header
         currentTab={currentTab}
         onChangeTab={(tab) => setCurrentTab(tab)}
@@ -23,28 +23,31 @@ export function MainApp() {
         onOpenDashboard={() => setDashboardOpen(true)}
       />
 
-      {/* Hero Banner centrado y limpio (sin bloques de ingesta ni arquitectura) */}
+      {/* Hero Banner centrado y limpio con efecto blur/glassmorphism sobre el fondo tech */}
       {currentTab === "feed" && (
-        <section className="relative overflow-hidden border-b border-[var(--border-color)] bg-gradient-to-b from-[var(--teal-bg)]/20 via-transparent to-transparent py-12 px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/25 mb-4 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Radar de Vanguardia en Inteligencia Artificial</span>
-            </div>
-            
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-[var(--text-primary)] max-w-3xl leading-[1.15]">
-              Noticias, Papers de Investigación y Novedades de IA
-            </h1>
+            {/* Contenedor Flotante Glassmorphism para Título y Descripción */}
+            <div className="w-full p-8 sm:p-12 rounded-3xl bg-[var(--bg-card)] backdrop-blur-2xl border border-[var(--border-color)] shadow-xl shadow-[var(--teal-glow)]/10 flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/25 mb-6 shadow-xs">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Radar de Vanguardia en Inteligencia Artificial</span>
+              </div>
+              
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-normal text-[var(--text-primary)] max-w-3xl leading-[1.18] my-2">
+                Noticias, Papers de Investigación y Novedades de IA
+              </h1>
 
-            <p className="mt-4 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
-              Información en tiempo real curada desde los principales noticieros tecnológicos (TechCrunch, The Verge, Wired), papers científicos de arXiv y publicaciones oficiales de OpenAI, Anthropic, Google DeepMind y Meta AI.
-            </p>
+              <p className="mt-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl font-normal">
+                Información en tiempo real curada desde los principales noticieros tecnológicos (TechCrunch, The Verge, Wired), papers científicos de arXiv y publicaciones oficiales de OpenAI, Anthropic, Google DeepMind y Meta AI.
+              </p>
+            </div>
           </div>
         </section>
       )}
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
         {currentTab === "feed" ? (
           <NewsGrid onOpenAuth={() => setAuthModalOpen(true)} />
         ) : (
@@ -55,16 +58,16 @@ export function MainApp() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-[var(--border-color)] bg-[var(--bg-card)]/80 backdrop-blur-md py-8 px-4 sm:px-6 lg:px-8 text-xs text-[var(--text-muted)]">
+      {/* Footer con Blur Glassmorphism */}
+      <footer className="mt-12 border-t border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl py-8 px-4 sm:px-6 lg:px-8 text-xs text-[var(--text-muted)]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-[var(--text-primary)]">RazWeb</span>
+            <span className="font-bold text-[var(--text-primary)] tracking-wide">RazWeb</span>
             <span>&copy; {new Date().getFullYear()} - Portal de Noticias de Inteligencia Artificial & Tecnología</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-[var(--teal-primary)] font-medium">
+            <span className="flex items-center gap-1.5 text-[var(--teal-primary)] font-semibold">
               <span className="w-2 h-2 rounded-full bg-[var(--teal-primary)] animate-pulse" />
               Sistema de Ingesta Activo
             </span>

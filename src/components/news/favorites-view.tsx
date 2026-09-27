@@ -46,8 +46,8 @@ export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) 
 
   return (
     <div className="space-y-6">
-      {/* Header View */}
-      <div className="flex items-center justify-between p-5 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl shadow-xs">
+      {/* Header View con Glassmorphism */}
+      <div className="flex items-center justify-between p-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
         <div className="flex items-center gap-3.5">
           <button
             onClick={onBackToFeed}
@@ -80,7 +80,7 @@ export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) 
       )}
 
       {!loading && favorites.length === 0 && (
-        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)]">
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
           <Bookmark className="w-12 h-12 text-[var(--teal-primary)] mx-auto mb-3 opacity-40" />
           <h3 className="text-xl font-bold text-[var(--text-primary)]">
             Aún no tienes noticias guardadas

@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+  <!-- Base background gradient -->
+  <rect width="1920" height="1080" fill="#fcfcfd"/>
+  
+  <defs>
+    <!-- Geometric Tech Grid Pattern -->
+    <pattern id="grid-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#e2e8f0" stroke-width="0.75" stroke-opacity="0.65"/>
+      <circle cx="0" cy="0" r="1.5" fill="#cbd5e1" fill-opacity="0.8"/>
+      <circle cx="60" cy="0" r="1.5" fill="#cbd5e1" fill-opacity="0.8"/>
+      <circle cx="0" cy="60" r="1.5" fill="#cbd5e1" fill-opacity="0.8"/>
+      <circle cx="60" cy="60" r="1.5" fill="#cbd5e1" fill-opacity="0.8"/>
+    </pattern>
+
+    <!-- Tech Circuit Dot Matrix Pattern -->
+    <pattern id="dots-pattern" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="0.75" fill="#94a3b8" fill-opacity="0.4"/>
+    </pattern>
+
+    <!-- Radial Glows -->
+    <radialGradient id="grad1" cx="30%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#f8fafc" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f1f5f9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="grad2" cx="80%" cy="70%" r="50%">
+      <stop offset="0%" stop-color="#12d463" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#12d463" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Patterns layer -->
+  <rect width="1920" height="1080" fill="url(#grid-pattern)" />
+  <rect width="1920" height="1080" fill="url(#dots-pattern)" opacity="0.6"/>
+
+  <!-- Subtle Ambient Glows -->
+  <rect width="1920" height="1080" fill="url(#grad1)" />
+  <rect width="1920" height="1080" fill="url(#grad2)" />
+
+  <!-- Abstract Tech Circuit Tracks & Neural Connections (Gris Claro #94a3b8 / #cbd5e1) -->
+  <g stroke="#94a3b8" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" opacity="0.55">
+    <!-- Top Left to Center Network -->
+    <path d="M 120 80 L 320 80 L 420 180 L 640 180 L 720 260 L 960 260" stroke-dasharray="6 4"/>
+    <circle cx="120" cy="80" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="320" cy="80" r="3" fill="#cbd5e1"/>
+    <circle cx="420" cy="180" r="3" fill="#cbd5e1"/>
+    <circle cx="640" cy="180" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="720" cy="260" r="3" fill="#cbd5e1"/>
+    <circle cx="960" cy="260" r="5" fill="#ffffff" stroke="#12d463" stroke-width="2"/>
+
+    <!-- Left Lateral Branch -->
+    <path d="M 240 280 L 360 280 L 440 360 L 440 540 L 560 660"/>
+    <circle cx="240" cy="280" r="3" fill="#cbd5e1"/>
+    <circle cx="440" cy="360" r="3" fill="#cbd5e1"/>
+    <circle cx="440" cy="540" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="560" cy="660" r="3" fill="#cbd5e1"/>
+
+    <!-- Center-Right AI Microchip Core Concept -->
+    <path d="M 1100 140 L 1280 140 L 1380 240 L 1600 240 L 1720 360" stroke-dasharray="8 6"/>
+    <circle cx="1100" cy="140" r="3" fill="#cbd5e1"/>
+    <circle cx="1280" cy="140" r="3" fill="#cbd5e1"/>
+    <circle cx="1380" cy="240" r="5" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="1600" cy="240" r="3" fill="#cbd5e1"/>
+    <circle cx="1720" cy="360" r="4" fill="#ffffff" stroke="#12d463" stroke-width="1.5"/>
+
+    <!-- Bottom Left Tech Bus -->
+    <path d="M 80 840 L 260 840 L 360 740 L 580 740 L 700 860 L 880 860"/>
+    <circle cx="80" cy="840" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+    <circle cx="360" cy="740" r="3" fill="#cbd5e1"/>
+    <circle cx="580" cy="740" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="700" cy="860" r="3" fill="#cbd5e1"/>
+    <circle cx="880" cy="860" r="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Bottom Right Neural Graph -->
+    <path d="M 1240 920 L 1400 920 L 1520 800 L 1760 800 L 1860 900" stroke-dasharray="5 5"/>
+    <circle cx="1240" cy="920" r="3" fill="#cbd5e1"/>
+    <circle cx="1400" cy="920" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+    <circle cx="1520" cy="800" r="5" fill="#ffffff" stroke="#12d463" stroke-width="2"/>
+    <circle cx="1760" cy="800" r="3" fill="#cbd5e1"/>
+    <circle cx="1860" cy="900" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- Vertical Data Streams -->
+    <path d="M 820 40 L 820 180 L 860 220 L 860 380" stroke-dasharray="4 4" opacity="0.45"/>
+    <circle cx="820" cy="40" r="2.5" fill="#cbd5e1"/>
+    <circle cx="860" cy="380" r="3" fill="#cbd5e1"/>
+
+    <path d="M 1540 480 L 1540 640 L 1480 700 L 1480 880" opacity="0.4"/>
+    <circle cx="1540" cy="480" r="3" fill="#cbd5e1"/>
+    <circle cx="1480" cy="880" r="3" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Digital Coordinate Markers / Tech Accents -->
+  <g font-family="monospace" font-size="11" fill="#94a3b8" opacity="0.45">
+    <text x="140" y="60">SYS_NODE // 01.RAZ</text>
+    <text x="1620" y="220">NET_TRACE // 0x4F</text>
+    <text x="100" y="820">AI_BUS // CH_09</text>
+    <text x="1680" y="780">QUANTUM_LOG // 26</text>
+  </g>
+</svg>
