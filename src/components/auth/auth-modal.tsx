@@ -52,11 +52,11 @@ export function AuthModal({ isOpen, onClose, initialMode = "login" }: AuthModalP
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-      <div className="relative w-full max-w-md p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-modal-backdrop">
+      <div className="relative w-full max-w-md p-7 bg-[var(--bg-card)] backdrop-blur-2xl border border-[var(--border-color)] rounded-3xl shadow-2xl animate-modal-content">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] press-scale transition-colors"
           aria-label="Cerrar modal"
         >
           <X className="w-5 h-5" />
@@ -140,7 +140,7 @@ export function AuthModal({ isOpen, onClose, initialMode = "login" }: AuthModalP
           <button
             type="submit"
             disabled={submitting}
-            className="w-full mt-2 py-2.5 px-4 rounded-xl font-medium text-sm text-white bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] transition-colors shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full mt-2 py-3 px-4 rounded-xl font-bold text-sm text-black bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] btn-magnetic transition-all shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
           >
             {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
             {mode === "login" ? "Iniciar Sesión" : "Crear Cuenta"}

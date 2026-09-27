@@ -127,47 +127,47 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
 
   return (
     <div className="space-y-8">
-      {/* Search and Filter Controls con Glassmorphism */}
-      <div className="flex flex-col gap-4 p-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
+      {/* Search and Filter Controls con Glassmorphism y Micro-interacciones */}
+      <div className="flex flex-col gap-4 p-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10 transition-all duration-200 hover:border-[var(--border-color-hover)]">
         <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-          {/* Source Tabs */}
+          {/* Source Tabs con feedback de pulsación */}
           <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
             <button
               onClick={() => setSourceType("ALL")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
                 sourceType === "ALL"
-                  ? "bg-[var(--teal-primary)] text-white shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
               }`}
             >
               Todas las Fuentes
             </button>
             <button
               onClick={() => setSourceType("TECH_NEWS")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
                 sourceType === "TECH_NEWS"
-                  ? "bg-[var(--teal-primary)] text-white shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
               }`}
             >
               Noticieros Tech
             </button>
             <button
               onClick={() => setSourceType("AI_PAPER")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
                 sourceType === "AI_PAPER"
-                  ? "bg-[var(--teal-primary)] text-white shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
               }`}
             >
               Papers arXiv
             </button>
             <button
               onClick={() => setSourceType("X_POST")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
                 sourceType === "X_POST"
-                  ? "bg-[var(--teal-primary)] text-white shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
+                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
               }`}
             >
               Empresas AI en X
@@ -175,7 +175,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           </div>
 
           {/* Sync Button & Search Bar */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <form onSubmit={handleSearchSubmit} className="relative flex-1 md:w-64">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
               <input
@@ -183,7 +183,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Buscar noticias..."
-                className="w-full pl-10 pr-3 py-2 text-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--teal-primary)]"
+                className="w-full pl-10 pr-3 py-2 text-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--teal-primary)] focus:ring-1 focus:ring-[var(--teal-primary)] transition-all"
               />
             </form>
 
@@ -191,16 +191,16 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
               onClick={handleSyncLatest}
               disabled={syncing}
               title="Actualizar y sincronizar fuentes"
-              className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--teal-primary)] transition-all cursor-pointer disabled:opacity-50"
+              className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--teal-primary)] btn-magnetic cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
             </button>
           </div>
         </div>
 
-        {/* Categories Bar */}
+        {/* Categories Bar con chips interactivos */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-          <div className="flex items-center gap-1 text-[var(--text-muted)] shrink-0 font-medium mr-1">
+          <div className="flex items-center gap-1 text-[var(--text-muted)] shrink-0 font-semibold mr-1">
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Filtro:</span>
           </div>
@@ -208,10 +208,10 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
             <button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs shrink-0 transition-colors cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs shrink-0 chip-hover cursor-pointer ${
                 category === cat
-                  ? "bg-[var(--teal-primary)] text-white font-medium shadow-xs"
-                  : "bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border-color)]"
+                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
+                  : "bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-color)]"
               }`}
             >
               {cat === "All" ? "Todos los temas" : cat}
@@ -229,7 +229,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           </div>
           <button
             onClick={() => fetchNews(1, false)}
-            className="px-3.5 py-1.5 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-600 transition-colors cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-600 press-scale transition-colors cursor-pointer"
           >
             Reintentar
           </button>
@@ -242,7 +242,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] p-5 space-y-4 animate-pulse"
+              className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl p-5 space-y-4 animate-pulse"
             >
               <div className="aspect-16/10 w-full bg-[var(--bg-card-hover)] rounded-2xl" />
               <div className="h-5 bg-[var(--bg-card-hover)] rounded-md w-3/4" />
@@ -258,7 +258,7 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
 
       {/* Empty State */}
       {!loading && items.length === 0 && !error && (
-        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10">
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10 animate-fade-slide">
           <Sparkles className="w-12 h-12 text-[var(--teal-primary)] mx-auto mb-3 opacity-60" />
           <h3 className="text-xl font-bold text-[var(--text-primary)]">No se encontraron noticias</h3>
           <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-sm mx-auto">
@@ -271,24 +271,29 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
               setSearch("");
               setSearchInput("");
             }}
-            className="mt-5 px-5 py-2.5 rounded-xl bg-[var(--teal-primary)] text-white text-xs font-semibold cursor-pointer shadow-xs hover:bg-[var(--teal-dark)] transition-colors"
+            className="mt-5 px-5 py-2.5 rounded-xl bg-[var(--teal-primary)] text-black font-bold text-xs btn-magnetic cursor-pointer shadow-xs"
           >
             Restablecer Filtros
           </button>
         </div>
       )}
 
-      {/* Card Grid */}
+      {/* Card Grid with Staggered Entrance */}
       {items.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((news, index) => (
-            <NewsCard
+            <div
               key={`${news.id || news.url}-${index}`}
-              news={news}
-              onOpenAuth={onOpenAuth}
-              onOpenDetail={(item) => setSelectedNews(item)}
-              onFavoriteToggled={handleFavoriteToggled}
-            />
+              className="animate-fade-slide"
+              style={{ animationDelay: `${Math.min(index * 35, 300)}ms` }}
+            >
+              <NewsCard
+                news={news}
+                onOpenAuth={onOpenAuth}
+                onOpenDetail={(item) => setSelectedNews(item)}
+                onFavoriteToggled={handleFavoriteToggled}
+              />
+            </div>
           ))}
         </div>
       )}

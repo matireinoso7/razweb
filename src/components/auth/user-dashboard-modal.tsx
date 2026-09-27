@@ -23,11 +23,11 @@ export function UserDashboardModal({ isOpen, onClose, onNavigateFavorites }: Use
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-      <div className="relative w-full max-w-md p-6 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-2xl shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-modal-backdrop">
+      <div className="relative w-full max-w-md p-7 bg-[var(--bg-card)] backdrop-blur-2xl border border-[var(--border-color)] rounded-3xl shadow-2xl animate-modal-content">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] press-scale transition-colors"
           aria-label="Cerrar panel"
         >
           <X className="w-5 h-5" />
@@ -78,13 +78,13 @@ export function UserDashboardModal({ isOpen, onClose, onNavigateFavorites }: Use
               onClose();
               onNavigateFavorites();
             }}
-            className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl border border-[var(--border-color)] hover:border-[var(--teal-primary)] text-sm font-medium text-[var(--text-primary)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] transition-all cursor-pointer"
+            className="w-full flex items-center justify-between px-4 py-3 rounded-2xl border border-[var(--border-color)] hover:border-[var(--teal-primary)] text-sm font-semibold text-[var(--text-primary)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] press-scale transition-all cursor-pointer"
           >
             <div className="flex items-center gap-2.5">
               <Bookmark className="w-4 h-4 text-[var(--teal-primary)]" />
               <span>Ver mis Noticias Favoritas</span>
             </div>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--teal-bg)] text-[var(--teal-primary)] font-semibold">
+            <span className="text-xs px-2.5 py-0.5 rounded-full bg-[var(--teal-bg)] text-[var(--teal-primary)] font-bold">
               {user._count?.favorites ?? 0}
             </span>
           </button>
@@ -93,7 +93,7 @@ export function UserDashboardModal({ isOpen, onClose, onNavigateFavorites }: Use
         <button
           onClick={handleLogout}
           disabled={loggingOut}
-          className="w-full py-2.5 px-4 rounded-xl border border-red-500/20 text-red-500 hover:bg-red-500/10 text-sm font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full py-2.5 px-4 rounded-2xl border border-red-500/20 text-red-500 hover:bg-red-500/10 text-sm font-medium press-scale transition-colors flex items-center justify-center gap-2 cursor-pointer"
         >
           <LogOut className="w-4 h-4" />
           <span>{loggingOut ? "Cerrando sesión..." : "Cerrar Sesión"}</span>

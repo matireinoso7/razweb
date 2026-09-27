@@ -25,20 +25,20 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
           {/* Left placeholder for symmetric balance on desktop */}
           <div className="hidden lg:block w-72 pointer-events-none" />
 
-          {/* Center: Nombre y Logo de la web centrados con mayor espaciado */}
-          <div className="flex-1 lg:flex-initial flex items-center justify-center sm:justify-center">
+          {/* Center: Nombre y Logo de la web centrados con micro-interacción refinada */}
+          <div className="flex-1 lg:flex-initial flex items-center justify-center">
             <div
               onClick={() => onChangeTab("feed")}
-              className="flex items-center gap-3.5 sm:gap-4 px-4 py-1.5 rounded-2xl hover:bg-[var(--bg-card-hover)] transition-all cursor-pointer group select-none"
+              className="flex items-center gap-3.5 sm:gap-4 px-4 py-2 rounded-2xl hover:bg-[var(--bg-card-hover)] press-scale transition-all cursor-pointer group select-none"
             >
-              <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-[var(--teal-dark)] via-[var(--teal-primary)] to-[var(--teal-light)] text-black font-bold shadow-lg shadow-[var(--teal-glow)] transition-transform group-hover:scale-105">
-                <Sparkles className="w-5 h-5 text-black" />
+              <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-[var(--teal-dark)] via-[var(--teal-primary)] to-[var(--teal-light)] text-black font-bold shadow-md shadow-[var(--teal-glow)] transition-transform duration-200 group-hover:scale-105 group-hover:rotate-3">
+                <Sparkles className="w-5 h-5 text-black transition-transform duration-200 group-hover:scale-110" />
               </div>
               <div className="flex items-center gap-2.5">
-                <span className="text-2xl sm:text-3xl font-black tracking-wider text-[var(--text-primary)]">
-                  Raz<span className="text-[var(--teal-primary)]">Web</span>
+                <span className="text-2xl sm:text-3xl font-black tracking-wider text-[var(--text-primary)] transition-colors duration-150 group-hover:text-[var(--teal-primary)]">
+                  Raz<span className="text-[var(--teal-primary)] group-hover:text-[var(--text-primary)]">Web</span>
                 </span>
-                <span className="px-2.5 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-widest bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/20 shadow-xs">
+                <span className="px-2.5 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-widest bg-[var(--teal-bg)] text-[var(--teal-primary)] border border-[var(--teal-primary)]/20 shadow-xs transition-colors duration-150">
                   AI & Tech
                 </span>
               </div>
@@ -53,12 +53,12 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
             <button
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-              className="p-2 sm:p-2.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--teal-primary)] transition-all cursor-pointer shadow-xs backdrop-blur-md"
+              className="p-2.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--teal-primary)] press-scale transition-all cursor-pointer shadow-xs backdrop-blur-md"
             >
               {theme === "dark" ? (
-                <Sun className="w-4 h-4 text-emerald-400" />
+                <Sun className="w-4 h-4 text-emerald-400 transition-transform duration-200 hover:rotate-45" />
               ) : (
-                <Moon className="w-4 h-4 text-[var(--teal-primary)]" />
+                <Moon className="w-4 h-4 text-[var(--teal-primary)] transition-transform duration-200 hover:-rotate-12" />
               )}
             </button>
 
@@ -66,7 +66,7 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
             {!loading && user ? (
               <button
                 onClick={onOpenDashboard}
-                className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-[var(--teal-primary)] transition-all cursor-pointer shadow-xs backdrop-blur-md"
+                className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:border-[var(--teal-primary)] press-scale transition-all cursor-pointer shadow-xs backdrop-blur-md"
               >
                 <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[var(--teal-bg)] text-[var(--teal-primary)] font-bold text-xs">
                   {user.name.charAt(0).toUpperCase()}
@@ -78,7 +78,7 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
             ) : (
               <button
                 onClick={onOpenAuth}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] text-white text-xs font-semibold transition-colors cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] text-black font-bold text-xs btn-magnetic cursor-pointer shadow-xs"
               >
                 <LogIn className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline-block">Ingresar</span>
@@ -92,7 +92,7 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
           <nav className="inline-flex items-center p-1.5 rounded-2xl bg-[var(--bg-card)]/90 backdrop-blur-xl border border-[var(--border-color)] shadow-xs">
             <button
               onClick={() => onChangeTab("feed")}
-              className={`px-5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold press-scale transition-all cursor-pointer ${
                 currentTab === "feed"
                   ? "bg-[var(--teal-primary)] text-black font-bold shadow-sm"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
@@ -108,7 +108,7 @@ export function Header({ currentTab, onChangeTab, onOpenAuth, onOpenDashboard }:
                   onChangeTab("favorites");
                 }
               }}
-              className={`px-5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-5 py-1.5 rounded-xl text-xs sm:text-sm font-semibold press-scale transition-all cursor-pointer flex items-center gap-1.5 ${
                 currentTab === "favorites"
                   ? "bg-[var(--teal-primary)] text-black font-bold shadow-sm"
                   : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"

@@ -142,7 +142,7 @@ export function NewsDetailModal({
         <button
           onClick={onClose}
           aria-label="Cerrar artículo"
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md transition-all cursor-pointer shadow-md"
+          className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md press-scale transition-all cursor-pointer shadow-md hover:scale-105"
         >
           <X className="w-5 h-5" />
         </button>
@@ -218,7 +218,7 @@ export function NewsDetailModal({
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   onClick={handleShare}
-                  className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] transition-all cursor-pointer shadow-xs"
+                  className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] press-scale transition-all cursor-pointer shadow-xs"
                   title="Copiar enlace"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Share2 className="w-4 h-4" />}
@@ -227,13 +227,13 @@ export function NewsDetailModal({
                 <button
                   onClick={handleToggleFavorite}
                   disabled={toggling}
-                  className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer shadow-xs ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold border press-scale transition-all cursor-pointer shadow-xs ${
                     isFavorite
-                      ? "bg-[var(--teal-primary)] text-white border-[var(--teal-primary)]"
+                      ? "bg-[var(--teal-primary)] text-black font-bold border-[var(--teal-primary)]"
                       : "border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--text-primary)]"
                   }`}
                 >
-                  <Bookmark className={`w-4 h-4 ${isFavorite ? "fill-white" : ""}`} />
+                  <Bookmark className={`w-4 h-4 ${isFavorite ? "fill-black" : ""}`} />
                   <span>{isFavorite ? "Guardado" : "Guardar"}</span>
                 </button>
 
@@ -241,7 +241,7 @@ export function NewsDetailModal({
                   href={news.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] text-white text-xs font-semibold transition-colors shadow-xs"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[var(--teal-primary)] hover:bg-[var(--teal-dark)] text-black font-bold text-xs btn-magnetic shadow-xs"
                 >
                   <span>Visitar Fuente</span>
                   <ExternalLink className="w-3.5 h-3.5" />

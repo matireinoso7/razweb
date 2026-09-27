@@ -12,7 +12,6 @@ import {
   Cpu,
   BookOpen,
   MessageSquare,
-  BookMarked,
   ArrowRight,
 } from "lucide-react";
 
@@ -113,30 +112,30 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
   return (
     <article
       onClick={handleCardClick}
-      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl hover:bg-[var(--bg-card-hover)] transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--teal-glow)] hover:border-[var(--teal-primary)]/50 cursor-pointer transform hover:-translate-y-1"
+      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl craft-card cursor-pointer select-none"
     >
-      {/* Card Header & Image */}
+      {/* Card Header & Image (Emil Kowalski / Impeccable: image is passive, container carries feedback) */}
       <div className="relative aspect-16/10 w-full overflow-hidden bg-slate-900/10">
         <img
           src={news.imageUrl || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80"}
           alt={news.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-108"
+          className="h-full w-full object-cover transition-transform duration-300 var(--ease-out) group-hover:scale-103"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
 
-        {/* Source Badge */}
-        <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border shadow-md bg-black/65 text-white border-white/20">
+        {/* Source Badge with subtle border glow */}
+        <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border shadow-md bg-black/65 text-white border-white/20 transition-transform duration-200 group-hover:translate-x-0.5">
           {badge.icon}
           <span>{badge.label}</span>
         </div>
 
-        {/* Favorite & Share Buttons */}
+        {/* Favorite & Share Buttons with press-scale feedback */}
         <div className="absolute top-3.5 right-3.5 flex items-center gap-2">
           <button
             onClick={handleShare}
             aria-label="Compartir enlace"
-            className="p-2 rounded-full bg-black/65 hover:bg-black/90 text-white backdrop-blur-md transition-all cursor-pointer shadow-md hover:scale-110"
+            className="p-2 rounded-full bg-black/65 hover:bg-black/90 text-white backdrop-blur-md press-scale transition-all cursor-pointer shadow-md hover:scale-110"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
           </button>
@@ -144,13 +143,13 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
             onClick={handleToggleFavorite}
             disabled={toggling}
             aria-label={isFavorite ? "Quitar de favoritos" : "Guardar en favoritos"}
-            className={`p-2 rounded-full backdrop-blur-md transition-all cursor-pointer shadow-md hover:scale-110 ${
+            className={`p-2 rounded-full backdrop-blur-md press-scale transition-all cursor-pointer shadow-md hover:scale-110 ${
               isFavorite
-                ? "bg-[var(--teal-primary)] text-white"
+                ? "bg-[var(--teal-primary)] text-black font-bold"
                 : "bg-black/65 hover:bg-black/90 text-white"
             }`}
           >
-            <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? "fill-white" : ""}`} />
+            <Bookmark className={`w-3.5 h-3.5 ${isFavorite ? "fill-black" : ""}`} />
           </button>
         </div>
 
@@ -164,15 +163,15 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
         </div>
       </div>
 
-      {/* Card Content with larger comfortable font */}
+      {/* Card Content with refined typography and micro-interactions */}
       <div className="flex flex-1 flex-col p-6">
         <div className="mb-2.5">
-          <span className="inline-block px-2.5 py-0.5 text-xs font-semibold rounded-md border border-[var(--border-color)] text-[var(--teal-primary)] bg-[var(--teal-bg)]">
+          <span className="inline-block px-2.5 py-0.5 text-xs font-semibold rounded-md border border-[var(--border-color)] text-[var(--teal-primary)] bg-[var(--teal-bg)] transition-colors duration-150 group-hover:border-[var(--teal-primary)]/40">
             {news.category}
           </span>
         </div>
 
-        <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] line-clamp-2 leading-snug group-hover:text-[var(--teal-primary)] transition-colors">
+        <h3 className="text-lg sm:text-xl font-bold text-[var(--text-primary)] line-clamp-2 leading-snug transition-colors duration-150 group-hover:text-[var(--teal-primary)]">
           {news.title}
         </h3>
 
@@ -180,16 +179,16 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
           {news.summary}
         </p>
 
-        {/* Card Footer */}
+        {/* Card Footer with animated directional arrow on hover */}
         <div className="mt-6 pt-4 border-t border-[var(--border-color)]/70 flex items-center justify-between text-xs">
           <div className="flex items-center gap-1.5 text-[var(--text-muted)] truncate max-w-[55%]">
             <UserIcon className="w-3.5 h-3.5 shrink-0" />
             <span className="truncate">{news.author || news.sourceName}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-[var(--teal-primary)] font-bold group-hover:translate-x-1 transition-transform">
+          <div className="flex items-center gap-1.5 text-[var(--teal-primary)] font-bold transition-all duration-200 group-hover:translate-x-1.5">
             <span>Leer completo</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:scale-115" />
           </div>
         </div>
       </div>
