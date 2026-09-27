@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { NewsItemEntity } from "@/domain/entities/news";
+import { navigateWithTransition } from "@/lib/navigate-with-transition";
 import { useAuth } from "../auth/auth-context";
 import {
   Bookmark,
@@ -18,11 +20,11 @@ import {
 interface NewsCardProps {
   news: NewsItemEntity;
   onOpenAuth: () => void;
-  onOpenDetail?: (news: NewsItemEntity) => void;
   onFavoriteToggled?: (newsId: string, isFav: boolean) => void;
 }
 
-export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: NewsCardProps) {
+export function NewsCard({ news, onOpenAuth, onFavoriteToggled }: NewsCardProps) {
+  const router = useRouter();
   const { user } = useAuth();
   const [isFavorite, setIsFavorite] = useState(news.isFavorite || false);
   const [toggling, setToggling] = useState(false);
@@ -72,8 +74,10 @@ export function NewsCard({ news, onOpenAuth, onOpenDetail, onFavoriteToggled }: 
   };
 
   const handleCardClick = () => {
-    if (onOpenDetail) {
-      onOpenDetail(news);
+    if (news.id) {
+      navigateWithTransition(router, `/noticia/${news.id}`);
+    } else {
+      window.open(news.url, "_blank", "noopener,noreferrer");
     }
   };
 

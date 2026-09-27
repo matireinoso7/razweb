@@ -3,8 +3,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { NewsItemEntity } from "@/domain/entities/news";
 import { NewsCard } from "./news-card";
-import { NewsDetailModal } from "./news-detail-modal";
-import { Bookmark, Sparkles, Loader2, ArrowLeft } from "lucide-react";
+import { Bookmark, Loader2, ArrowLeft } from "lucide-react";
 
 interface FavoritesViewProps {
   onBackToFeed: () => void;
@@ -14,8 +13,6 @@ interface FavoritesViewProps {
 export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) {
   const [favorites, setFavorites] = useState<NewsItemEntity[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedNews, setSelectedNews] = useState<NewsItemEntity | null>(null);
-
   const fetchFavorites = useCallback(async () => {
     try {
       setLoading(true);
@@ -38,9 +35,6 @@ export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) 
   const handleFavoriteToggled = (newsId: string, isFav: boolean) => {
     if (!isFav) {
       setFavorites((prev) => prev.filter((item) => item.id !== newsId));
-      if (selectedNews && selectedNews.id === newsId) {
-        setSelectedNews(null);
-      }
     }
   };
 
@@ -104,21 +98,12 @@ export function FavoritesView({ onBackToFeed, onOpenAuth }: FavoritesViewProps) 
               key={news.id || news.url}
               news={news}
               onOpenAuth={onOpenAuth}
-              onOpenDetail={(item) => setSelectedNews(item)}
               onFavoriteToggled={handleFavoriteToggled}
             />
           ))}
         </div>
       )}
 
-      {/* Dynamic Expansion Modal for reading favorites */}
-      <NewsDetailModal
-        news={selectedNews}
-        isOpen={Boolean(selectedNews)}
-        onClose={() => setSelectedNews(null)}
-        onOpenAuth={onOpenAuth}
-        onFavoriteToggled={handleFavoriteToggled}
-      />
     </div>
   );
 }

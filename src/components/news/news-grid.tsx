@@ -3,23 +3,14 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { NewsItemEntity, SourceType } from "@/domain/entities/news";
 import { NewsCard } from "./news-card";
-import { NewsDetailModal } from "./news-detail-modal";
-import { Loader2, RefreshCw, AlertCircle, Sparkles, SlidersHorizontal, Search } from "lucide-react";
+import { FeaturedStory } from "./featured-story";
+import { NewsToolbar } from "./news-toolbar";
+import { Loader2, AlertCircle, Sparkles } from "lucide-react";
 
 interface NewsGridProps {
   onOpenAuth: () => void;
   initialSourceType?: SourceType | "ALL";
 }
-
-const CATEGORIES = [
-  "All",
-  "AI Frontier & Models",
-  "AI & Startups",
-  "Research Papers",
-  "Tech & Ethics",
-  "Scientific Discovery & Gemini",
-  "Open Weights & Llama",
-];
 
 export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProps) {
   const [items, setItems] = useState<NewsItemEntity[]>([]);
@@ -33,9 +24,6 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
   const [search, setSearch] = useState<string>("");
   const [searchInput, setSearchInput] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-
-  // Selected article for dynamic expansion modal
-  const [selectedNews, setSelectedNews] = useState<NewsItemEntity | null>(null);
 
   const observerTarget = useRef<HTMLDivElement | null>(null);
 
@@ -63,8 +51,9 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
         setItems((prev) => (append ? [...prev, ...data.items] : data.items));
         setHasMore(data.hasMore);
         setPage(pageToLoad);
-      } catch (err: any) {
-        setError(err.message || "Error al cargar noticias");
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Error al cargar noticias";
+        setError(message);
       } finally {
         setLoading(false);
         setLoadingMore(false);
@@ -73,12 +62,10 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
     [sourceType, category, search]
   );
 
-  // Initial load or filter change
   useEffect(() => {
     fetchNews(1, false);
   }, [fetchNews]);
 
-  // Infinite Scroll via IntersectionObserver
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -120,129 +107,50 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
     setItems((prev) =>
       prev.map((item) => (item.id === newsId ? { ...item, isFavorite: isFav } : item))
     );
-    if (selectedNews && selectedNews.id === newsId) {
-      setSelectedNews((prev) => (prev ? { ...prev, isFavorite: isFav } : null));
-    }
   };
 
+  const featuredItem = items.length > 0 && !search.trim() ? items[0] : null;
+  const gridItems =
+    featuredItem && items.length > 1 ? items.slice(1) : featuredItem ? [] : items;
+
   return (
-    <div className="space-y-8">
-      {/* Search and Filter Controls con Glassmorphism y Micro-interacciones */}
-      <div className="flex flex-col gap-4 p-6 rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10 transition-all duration-200 hover:border-[var(--border-color-hover)]">
-        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-          {/* Source Tabs con feedback de pulsación */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--bg-primary)] border border-[var(--border-color)]">
-            <button
-              onClick={() => setSourceType("ALL")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
-                sourceType === "ALL"
-                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
-              }`}
-            >
-              Todas las Fuentes
-            </button>
-            <button
-              onClick={() => setSourceType("TECH_NEWS")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
-                sourceType === "TECH_NEWS"
-                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
-              }`}
-            >
-              Noticieros Tech
-            </button>
-            <button
-              onClick={() => setSourceType("AI_PAPER")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
-                sourceType === "AI_PAPER"
-                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
-              }`}
-            >
-              Papers arXiv
-            </button>
-            <button
-              onClick={() => setSourceType("X_POST")}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold press-scale transition-all cursor-pointer ${
-                sourceType === "X_POST"
-                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
-                  : "text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)]"
-              }`}
-            >
-              Empresas AI en X
-            </button>
-          </div>
+    <div className="space-y-2">
+      {featuredItem && !loading && <FeaturedStory news={featuredItem} />}
 
-          {/* Sync Button & Search Bar */}
-          <div className="flex items-center gap-2.5">
-            <form onSubmit={handleSearchSubmit} className="relative flex-1 md:w-64">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Buscar noticias..."
-                className="w-full pl-10 pr-3 py-2 text-xs rounded-xl border border-[var(--border-color)] bg-[var(--bg-primary)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--teal-primary)] focus:ring-1 focus:ring-[var(--teal-primary)] transition-all"
-              />
-            </form>
+      <NewsToolbar
+        sourceType={sourceType}
+        onSourceTypeChange={setSourceType}
+        category={category}
+        onCategoryChange={setCategory}
+        searchInput={searchInput}
+        onSearchInputChange={setSearchInput}
+        onSearchSubmit={handleSearchSubmit}
+        syncing={syncing}
+        onSync={handleSyncLatest}
+      />
 
-            <button
-              onClick={handleSyncLatest}
-              disabled={syncing}
-              title="Actualizar y sincronizar fuentes"
-              className="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] text-[var(--teal-primary)] btn-magnetic cursor-pointer disabled:opacity-50"
-            >
-              <RefreshCw className={`w-4 h-4 ${syncing ? "animate-spin" : ""}`} />
-            </button>
-          </div>
-        </div>
-
-        {/* Categories Bar con chips interactivos */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
-          <div className="flex items-center gap-1 text-[var(--text-muted)] shrink-0 font-semibold mr-1">
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filtro:</span>
-          </div>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs shrink-0 chip-hover cursor-pointer ${
-                category === cat
-                  ? "bg-[var(--teal-primary)] text-black font-bold shadow-xs"
-                  : "bg-[var(--bg-primary)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] border border-[var(--border-color)]"
-              }`}
-            >
-              {cat === "All" ? "Todos los temas" : cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Error state */}
       {error && (
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
+        <div className="flex items-center justify-between p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm mb-6">
           <div className="flex items-center gap-2">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <span>{error}</span>
           </div>
           <button
+            type="button"
             onClick={() => fetchNews(1, false)}
-            className="px-3.5 py-1.5 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-600 press-scale transition-colors cursor-pointer"
+            className="px-3.5 py-1.5 rounded-xl bg-red-500 text-white text-xs font-semibold hover:bg-red-600 press-scale cursor-pointer"
           >
             Reintentar
           </button>
         </div>
       )}
 
-      {/* Loading Skeleton */}
       {loading && items.length === 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-xl p-5 space-y-4 animate-pulse"
+              className="rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] p-5 space-y-4 animate-pulse"
             >
               <div className="aspect-16/10 w-full bg-[var(--bg-card-hover)] rounded-2xl" />
               <div className="h-5 bg-[var(--bg-card-hover)] rounded-md w-3/4" />
@@ -250,77 +158,77 @@ export function NewsGrid({ onOpenAuth, initialSourceType = "ALL" }: NewsGridProp
                 <div className="h-3.5 bg-[var(--bg-card-hover)] rounded-md w-full" />
                 <div className="h-3.5 bg-[var(--bg-card-hover)] rounded-md w-5/6" />
               </div>
-              <div className="h-9 bg-[var(--bg-card-hover)] rounded-xl w-full" />
             </div>
           ))}
         </div>
       )}
 
-      {/* Empty State */}
       {!loading && items.length === 0 && !error && (
-        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] backdrop-blur-2xl shadow-xl shadow-[var(--teal-glow)]/10 animate-fade-slide">
+        <div className="py-20 text-center rounded-3xl border border-[var(--border-color)] bg-[var(--bg-card)] animate-fade-slide">
           <Sparkles className="w-12 h-12 text-[var(--teal-primary)] mx-auto mb-3 opacity-60" />
           <h3 className="text-xl font-bold text-[var(--text-primary)]">No se encontraron noticias</h3>
           <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-sm mx-auto">
-            Prueba ajustando los filtros de categoría o buscando otro término.
+            Prueba ajustando los filtros o buscando otro término.
           </p>
           <button
+            type="button"
             onClick={() => {
               setCategory("All");
               setSourceType("ALL");
               setSearch("");
               setSearchInput("");
             }}
-            className="mt-5 px-5 py-2.5 rounded-xl bg-[var(--teal-primary)] text-black font-bold text-xs btn-magnetic cursor-pointer shadow-xs"
+            className="mt-5 px-5 py-2.5 rounded-xl bg-[var(--teal-primary)] text-black font-bold text-xs btn-magnetic cursor-pointer"
           >
-            Restablecer Filtros
+            Restablecer filtros
           </button>
         </div>
       )}
 
-      {/* Card Grid with Staggered Entrance */}
-      {items.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((news, index) => (
-            <div
-              key={`${news.id || news.url}-${index}`}
-              className="animate-fade-slide"
-              style={{ animationDelay: `${Math.min(index * 35, 300)}ms` }}
-            >
-              <NewsCard
-                news={news}
-                onOpenAuth={onOpenAuth}
-                onOpenDetail={(item) => setSelectedNews(item)}
-                onFavoriteToggled={handleFavoriteToggled}
-              />
-            </div>
-          ))}
-        </div>
+      {gridItems.length > 0 && (
+        <>
+          {featuredItem && (
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
+              Más noticias
+            </h3>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gridItems.map((news, index) => (
+              <div
+                key={`${news.id || news.url}-${index}`}
+                className="animate-fade-slide"
+                style={{ animationDelay: `${Math.min(index * 35, 300)}ms` }}
+              >
+                <NewsCard
+                  news={news}
+                  onOpenAuth={onOpenAuth}
+                  onFavoriteToggled={handleFavoriteToggled}
+                />
+              </div>
+            ))}
+          </div>
+        </>
       )}
 
-      {/* Infinite Scroll Trigger & Loader */}
+      {!loading && featuredItem && gridItems.length === 0 && items.length === 1 && (
+        <p className="text-center text-sm text-[var(--text-muted)] py-8">
+          Solo hay un resultado con estos filtros. Desplázate para cargar más al cambiar filtros.
+        </p>
+      )}
+
       <div ref={observerTarget} className="py-6 flex justify-center">
         {loadingMore && (
           <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
             <Loader2 className="w-5 h-5 text-[var(--teal-primary)] animate-spin" />
-            <span>Cargando más noticias...</span>
+            <span>Cargando más noticias…</span>
           </div>
         )}
         {!hasMore && items.length > 0 && (
           <div className="text-xs text-[var(--text-muted)] font-medium">
-            Has llegado al final de las noticias por ahora.
+            Fin del feed por ahora.
           </div>
         )}
       </div>
-
-      {/* Dynamic Expansion Modal for reading */}
-      <NewsDetailModal
-        news={selectedNews}
-        isOpen={Boolean(selectedNews)}
-        onClose={() => setSelectedNews(null)}
-        onOpenAuth={onOpenAuth}
-        onFavoriteToggled={handleFavoriteToggled}
-      />
     </div>
   );
 }

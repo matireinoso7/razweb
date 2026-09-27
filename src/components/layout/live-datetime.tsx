@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Clock, Calendar } from "lucide-react";
+
+function capitalizeFirst(text: string) {
+  if (!text) return text;
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
 
 export function LiveDateTime() {
   const [dateTime, setDateTime] = useState<{ date: string; time: string }>({
@@ -12,11 +16,11 @@ export function LiveDateTime() {
   useEffect(() => {
     const update = () => {
       const now = new Date();
-      
+
       const dateFormatted = new Intl.DateTimeFormat("es-ES", {
-        weekday: "short",
+        weekday: "long",
         day: "numeric",
-        month: "short",
+        month: "long",
         year: "numeric",
       }).format(now);
 
@@ -28,7 +32,7 @@ export function LiveDateTime() {
       }).format(now);
 
       setDateTime({
-        date: dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1),
+        date: capitalizeFirst(dateFormatted),
         time: timeFormatted,
       });
     };
@@ -40,24 +44,25 @@ export function LiveDateTime() {
 
   if (!dateTime.time) {
     return (
-      <div className="hidden md:flex items-center gap-2 text-xs text-[var(--text-muted)] animate-pulse">
-        <Clock className="w-3.5 h-3.5 text-[var(--teal-primary)]" />
-        <span>Cargando hora...</span>
+      <div className="hidden sm:flex flex-col items-center text-center text-xs text-[var(--text-muted)] animate-pulse min-w-[140px]">
+        <span>Sincronizando…</span>
       </div>
     );
   }
 
   return (
-    <div className="hidden lg:flex items-center gap-3 px-3 py-1.5 rounded-full border border-[var(--border-color)] bg-[var(--bg-card)] text-xs text-[var(--text-secondary)] shadow-xs">
-      <div className="flex items-center gap-1.5 font-medium">
-        <Calendar className="w-3.5 h-3.5 text-[var(--teal-primary)]" />
-        <span>{dateTime.date}</span>
-      </div>
-      <span className="text-[var(--border-color)]">|</span>
-      <div className="flex items-center gap-1.5 font-mono text-[var(--teal-primary)] font-semibold">
-        <Clock className="w-3.5 h-3.5" />
-        <span>{dateTime.time}</span>
-      </div>
+    <div className="hidden sm:flex flex-col items-center justify-center text-center px-3 py-2 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-xs min-w-[140px] max-w-[220px]">
+      <time
+        dateTime={new Date().toISOString().split("T")[0]}
+        className="text-[10px] sm:text-[11px] font-medium text-[var(--text-secondary)] leading-snug"
+      >
+        {dateTime.date}
+      </time>
+      <time
+        className="mt-1 text-sm font-mono font-semibold text-[var(--teal-primary)] tabular-nums tracking-wide"
+      >
+        {dateTime.time}
+      </time>
     </div>
   );
 }

@@ -215,6 +215,44 @@ h1, h2, h3, h4, h5, h6 {
   animation: fadeSlideUp 320ms var(--ease-out) both;
 }
 
+/* Editorial reading column */
+.prose-reading {
+  font-family: var(--font-reading), Georgia, "Times New Roman", serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 42rem;
+}
+
+.prose-reading.prose-lead {
+  max-width: 40rem;
+}
+
+.app-body {
+  view-transition-name: app-body;
+}
+
+@keyframes articleEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.article-enter {
+  animation: articleEnter 420ms var(--ease-spring) both;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: var(--ease-out);
+}
+
 /* Reduced motion accessibility check */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

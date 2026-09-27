@@ -1,5 +1,7 @@
 # RazWeb - Portal de Noticias sobre Inteligencia Artificial & Tecnología
 
+Guía para agentes de IA y reglas del proyecto: ver [AGENTS.md](AGENTS.md) y [.cursor/rules/](.cursor/rules/).
+
 RazWeb es una plataforma web moderna, escalable y con arquitectura limpia (SOLID) desarrollada para la agregación, curaduría y visualización de noticias de vanguardia sobre Inteligencia Artificial y Computación Cuántica/Tecnología.
 
 ---
